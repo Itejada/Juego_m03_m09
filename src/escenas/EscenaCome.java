@@ -103,6 +103,7 @@ public class EscenaCome extends Application {
                // Clear the canvas
                 gc.clearRect(0, 0, ANCHO, ALTURA);
                 gc.setFill(Color.BLUE);
+<<<<<<< Updated upstream
                 gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
                 fantasma.move(currentNanoTime);
@@ -125,6 +126,67 @@ public class EscenaCome extends Application {
 
 
             }
+=======
+                gc.fillRect(0, canvas.getHeight()/10, canvas.getWidth(), canvas.getHeight());
+
+                if(packman.getLives()>=0) {
+                    if(startSound.getCurrentTime().equals(startSound.getBufferProgressTime())) {
+                        if(state!=0) {
+                            if(mCurrentNanoTime-lastupdate>=222222222) {
+                                state=0;
+                            }else {
+                                state=-1;
+                            }
+                        }
+                        mainTheme.state=true;
+                        fantasma.move(currentNanoTime);
+                        fantasma2.move(currentNanoTime);
+                        fantasma3.move(currentNanoTime);
+                        fantasma4.move(currentNanoTime);
+
+                        packman.movePackman(input, packman, anchoSprite, up, altoSprite, down,mCurrentNanoTime);
+                       // packmanS.movePackman(inputServer, packman, anchoSprite, up, altoSprite, down,mCurrentNanoTime);
+                        packman.killP(input,packman);
+                        try {
+                            packman.checkCollision(packman, fantasma,fantasma2,fantasma3,fantasma4, startSound, deadTime,partida);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else {
+                        state=-2;
+                        mainTheme.state=false;
+                        fantasma.animation(currentNanoTime,"");
+                        fantasma2.animation(currentNanoTime,"");
+                        fantasma3.animation(currentNanoTime,"");
+                        fantasma4.animation(currentNanoTime,"");
+                    }
+                    bolita.eatingBol(packman, HEIGHT_SCREEN, WIDTH_SCREEN);
+                    bolita.render(gc);
+                    packman.render(gc);
+                    fantasma.render(gc);
+                    fantasma2.render(gc);
+                    fantasma3.render(gc);
+                    fantasma4.render(gc);
+                    hud.renderHud(gc,packman,HEIGHT_SCREEN, WIDTH_SCREEN);
+
+                    //if(state==0) state=-1;
+                    if(state ==-2) {
+                        gc.setFill( Color.WHITE );
+                        gc.fillText( "¿¡PREPARADO!?", HEIGHT_SCREEN/4, WIDTH_SCREEN/2);
+                        lastupdate=mCurrentNanoTime;
+                        startPartida=mCurrentNanoTime;
+                    }
+
+                    if(state ==-1) {
+                        gc.setFill( Color.WHITE );
+                        gc.fillText( "¡YA!", HEIGHT_SCREEN/2, WIDTH_SCREEN/2);
+                    }
+                }
+                }
+>>>>>>> Stashed changes
         }.start();
 
         theStage.show();
